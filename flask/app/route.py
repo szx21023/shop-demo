@@ -7,10 +7,16 @@ def index():
     return render_template("index.html")
 
 def login():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    session['username'] = username
-    return f"successful login!"
+    if request.method == "POST":
+        user = request.form["nm"]
+        session["username"] = user
+        return redirect(url_for("home_page"))
+    
+    else:
+        if "username" in session:
+            return redirect(url_for("home_page"))
+
+        return render_template("login.html")
 
 def logout():
     session.pop('username')
