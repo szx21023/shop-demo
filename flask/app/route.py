@@ -22,6 +22,13 @@ def logout():
     session.pop('username')
     return redirect(url_for("index"))
 
+def shopping_cart():
+    if "username" in session:
+        return f"hello mr.{session['username']}"
+
+    else:
+        return redirect(url_for("login"))
+
 def home_page():
     if 'username' in session:
         return f"this is {session['username']} page!"

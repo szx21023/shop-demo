@@ -1,5 +1,5 @@
 from flask import Flask
-from app.route import hello_world, index, login, logout, home_page
+from app.route import hello_world, index, login, logout, shopping_cart, home_page
 
 def create_app():
     app = Flask(__name__)
@@ -8,5 +8,6 @@ def create_app():
     app.add_url_rule('/index', 'index', index)
     app.add_url_rule('/login', 'login', login, methods=["POST", "GET"])
     app.add_url_rule('/logout', 'logout', logout)
+    app.add_url_rule('/shopping_cart', 'shopping_cart', shopping_cart)
     app.add_url_rule('/home_page', 'home_page', home_page)
     return app
