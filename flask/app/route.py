@@ -1,4 +1,5 @@
 from flask import render_template, request, session, redirect, url_for
+from .model import Users
 
 def hello_world():
     return "hello, mvc"
@@ -35,3 +36,9 @@ def home_page():
 
     else:
         return "none one page!"
+
+def users():
+    result = Users.query.all()
+    for data in result:
+        print(data.username, data.password, data.phone, data.email, data.create_time)
+    return 'ok'
