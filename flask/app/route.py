@@ -9,9 +9,18 @@ def index():
 
 def login():
     if request.method == "POST":
-        user = request.form["nm"]
-        session["username"] = user
-        return redirect(url_for("home_page"))
+        result = Users.query.filter(
+            Users.username == request.form["nm"]).first()
+        if result:
+            if result.password == request.form["pw"]:
+                session["username"] = request.form["nm"]
+                return redirect(url_for("home_page"))
+
+            else:
+                return "password is incorrect!!!", 400
+
+        else:
+            return "the name doesnt exist!!!", 400
     
     else:
         if "username" in session:
