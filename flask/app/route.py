@@ -1,4 +1,5 @@
 from flask import render_template, request, session, redirect, url_for
+from .model import Users
 
 def hello_world():
     return "hello, mvc"
@@ -8,9 +9,18 @@ def index():
 
 def login():
     if request.method == "POST":
-        user = request.form["nm"]
-        session["username"] = user
-        return redirect(url_for("home_page"))
+        result = Users.query.filter(
+            Users.username == request.form["nm"]).first()
+        if result:
+            if result.password == request.form["pw"]:
+                session["username"] = request.form["nm"]
+                return redirect(url_for("home_page"))
+
+            else:
+                return "password is incorrect!!!", 400
+
+        else:
+            return "the name doesnt exist!!!", 400
     
     else:
         if "username" in session:
@@ -35,3 +45,9 @@ def home_page():
 
     else:
         return "none one page!"
+
+def users():
+    result = Users.query.all()
+    for data in result:
+        print(data.username, data.password, data.phone, data.email, data.create_time)
+    return 'ok'

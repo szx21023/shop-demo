@@ -1,6 +1,24 @@
 version: "3"
   
 services:
+    mysql:
+        container_name: mysql
+        build:
+            context: ./mysql
+            dockerfile: dockerfile
+        ports:
+            - ${MYSQL_PORT_NUMBER}:3306
+        networks:
+            - mynet
+        volumes:
+            - ./data/mysql/data:/var/lib/mysql
+            - ./mysql/init:/docker-entrypoint-initdb.d/
+            - ./mysql/sql:/opt/sql
+        environment:
+            - MYSQL_ROOT_PASSWORD:${MYSQL_ROOT_PASSWORD}
+        restart: always
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
     flask:
         container_name: flask
         build:
@@ -8,6 +26,8 @@ services:
             dockerfile: dockerfile
         ports:
             - 5000:5000
+        depends_on:
+            - mysql
         networks:
             - mynet
         environment:
@@ -31,22 +51,6 @@ services:
             SERVER_PORT: ${DOCKER_SERVER_PORT}
         command: /bin/bash -c "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
         restart: always
-
-    mysql:
-        container_name: mysql
-        build: 
-            context: ./mysql
-            dockerfile: dockerfile
-        volumes:
-            - ./data/mysql/data:/var/lib/mysql
-            - ./mysql/init:/docker-entrypoint-initdb.d/
-            - ./mysql/sql:/opt/sql
-        environment:
-            - MYSQL_ROOT_PASSWORD:${MYSQL_ROOT_PASSWORD}
-        ports:
-            - ${MYSQL_PORT_NUMBER}:3306
-        restart: always
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 networks:
         mynet:
