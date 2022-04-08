@@ -1,15 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
-# for develop
+# for docker-compose
 DB_USER = 'root'
 DB_PASS = 'test1234'
-DB_HOST = 'localhost'
-DB_PORT = '33060'
-DB_NAME = 'test'
-# for docker-compose
 DB_HOST = 'mysql'
 DB_PORT = '3306'
+DB_NAME = 'test'
+# for develop
+# DB_HOST = 'localhost'
+# DB_PORT = '33060'
 db = SQLAlchemy()
 
 def create_app():

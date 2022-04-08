@@ -5,7 +5,8 @@ def hello_world():
     return "hello, mvc"
 
 def index():
-    return render_template("index.html")
+    products = Products.query.all()
+    return render_template("index.html", products=products)
 
 def login():
     if request.method == "POST":
