@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for
-from .model import Users
+from .model import Users, Products
 
 def hello_world():
     return "hello, mvc"
@@ -50,4 +50,10 @@ def users():
     result = Users.query.all()
     for data in result:
         print(data.username, data.password, data.phone, data.email, data.create_time)
+    return 'ok'
+
+def products():
+    result = Products.query.all()
+    for data in result:
+        print(data.name, data.price, data.create_time)
     return 'ok'
