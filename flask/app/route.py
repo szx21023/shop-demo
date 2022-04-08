@@ -55,5 +55,5 @@ def users():
 def products():
     result = Products.query.all()
     for data in result:
-        print(data.name, data.price, data.create_time)
+        print(data.name, data.stars, data.price, data.create_time)
     return 'ok'

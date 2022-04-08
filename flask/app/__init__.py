@@ -8,8 +8,8 @@ DB_HOST = 'localhost'
 DB_PORT = '33060'
 DB_NAME = 'test'
 # for docker-compose
-# DB_HOST = 'mysql'
-# DB_PORT = '3306'
+DB_HOST = 'mysql'
+DB_PORT = '3306'
 db = SQLAlchemy()
 
 def create_app():
