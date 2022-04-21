@@ -13,14 +13,15 @@ DB_NAME = 'test'
 db = SQLAlchemy()
 
 def create_app():
-    from app.route import hello_world, index, login, logout, shopping_cart, home_page, users, products
+    from app.route import hello_world, index, login, logout, shopping_carts, shopping, home_page, users, products
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret'
     app.add_url_rule('/', '/', hello_world)
     app.add_url_rule('/index', 'index', index)
     app.add_url_rule('/login', 'login', login, methods=["POST", "GET"])
     app.add_url_rule('/logout', 'logout', logout)
-    app.add_url_rule('/shopping_cart', 'shopping_cart', shopping_cart)
+    app.add_url_rule('/shopping_carts', 'shopping_carts', shopping_carts)
+    app.add_url_rule('/shopping', 'shopping', shopping)
     app.add_url_rule('/home_page', 'home_page', home_page)
     app.add_url_rule('/users', 'users', users)
     app.add_url_rule('/products', 'products', products)

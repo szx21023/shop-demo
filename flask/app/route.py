@@ -1,5 +1,6 @@
 from flask import render_template, request, session, redirect, url_for
-from .model import Users, Products
+from .model import Users, Products, Shopping_carts
+from . import db
 
 def hello_world():
     return "hello, mvc"
@@ -33,13 +34,6 @@ def logout():
     session.pop('username')
     return redirect(url_for("index"))
 
-def shopping_cart():
-    if "username" in session:
-        return f"hello mr.{session['username']}"
-
-    else:
-        return redirect(url_for("login"))
-
 def home_page():
     if 'username' in session:
         return f"this is {session['username']} page!"
@@ -57,4 +51,19 @@ def products():
     result = Products.query.all()
     for data in result:
         print(data.name, data.stars, data.price, data.create_time)
+    return 'ok'
+
+def shopping_carts():
+    result = Shopping_carts.query.all()
+    for data in result:
+        print(f'id: {data.id}, user: {data.user_id}, product: {data.product_id}, create_time: {data.create_time}')
+    return 'ok'
+
+def shopping():
+    cart_1 = Shopping_carts(1, 1)
+    cart_2 = Shopping_carts(100, 100)
+    db.session.add_all([cart_1, cart_2])
+    db.session.commit()
+    query = Shopping_carts.query.first()
+    print(query.products.id, query.products.price)
     return 'ok'
