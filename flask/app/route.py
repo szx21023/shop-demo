@@ -53,8 +53,18 @@ def users():
         print(data.username, data.password, data.phone, data.email, data.create_time)
     return 'ok'
 
-def products():
-    result = Products.query.all()
-    for data in result:
-        print(data.name, data.stars, data.price, data.create_time)
-    return 'ok'
+def products(pid=None):
+    message = '''<tr><td>id</td>
+                     <td>name</td>
+                     <td>stars</td>
+                     <td>price</td>
+                     <td>create_time</td></tr>'''
+    if pid:
+        data = Products.query.filter_by(id=pid).first()
+        message += f'<tr><td>{data.id}</td><td>{data.name}</td><td>{data.stars}</td><td>{data.price}</td><td>{data.create_time}</td></tr>'
+
+    else:
+        result = Products.query.all()
+        for data in result:
+            message += f'<tr><td>{data.id}</td><td>{data.name}</td><td>{data.stars}</td><td>{data.price}</td><td>{data.create_time}</td></tr>'
+    return f'<table>' + message + '</table>'

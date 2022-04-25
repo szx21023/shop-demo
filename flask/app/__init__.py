@@ -24,6 +24,7 @@ def create_app():
     app.add_url_rule('/home_page', 'home_page', home_page)
     app.add_url_rule('/users', 'users', users)
     app.add_url_rule('/products', 'products', products)
+    app.add_url_rule('/products/<int:pid>', 'products', products)
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
